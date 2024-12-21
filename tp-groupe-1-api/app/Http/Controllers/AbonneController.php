@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Abonne;
 
 class AbonneController extends Controller
 {
@@ -11,7 +12,7 @@ class AbonneController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Abonne::all(), 200);
     }
 
     /**
@@ -27,7 +28,16 @@ class AbonneController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'nom' => 'required|string',
+            'prenom' => 'required|string',
+            'email' => 'required|email|unique:abonnes',
+            'contact' => 'required|string',
+            'statut' => 'boolean',
+        ]);
+
+        $abonne = Abonne::create($validated);
+        return response()->json($abonne, 201);
     }
 
     /**
@@ -35,7 +45,11 @@ class AbonneController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $abonne = Abonne::find($id);
+        if (!$abonne) {
+            return response()->json(['error' => 'Abonné non trouvé'], 404);
+        }
+        return response()->json($abonne, 200);
     }
 
     /**
@@ -51,7 +65,21 @@ class AbonneController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $abonne = Abonne::find($id);
+        if (!$abonne) {
+            return response()->json(['error' => 'Abonné non trouvé'], 404);
+        }
+
+        $validated = $request->validate([
+            'nom' => 'sometimes|string',
+            'prenom' => 'sometimes|string',
+            'email' => 'sometimes|email|unique:abonnes,email,' . $abonne->id,
+            'contact' => 'sometimes|string',
+            'statut' => 'boolean',
+        ]);
+
+        $abonne->update($validated);
+        return response()->json($abonne, 200);
     }
 
     /**
@@ -59,6 +87,27 @@ class AbonneController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $abonne = Abonne::find($id);
+        if (!$abonne) {
+            return response()->json(['error' => 'Abonné non trouvé'], 404);
+        }
+
+        $abonne->delete();
+        return response()->json(['message' => 'Abonné supprimé'], 200);
+    }
+
+    public function abonnesComptes()
+    {
+        $abonnes = Abonne::with('comptes')->get();
+        return response()->json($abonnes, 200);
+    }
+
+    public function detailAbonneComptes($id)
+    {
+        $abonne = Abonne::with('comptes')->find($id);
+        if (!$abonne) {
+            return response()->json(['error' => 'Abonné non trouvé'], 404);
+        }
+        return response()->json($abonne, 200);
     }
 }

@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Compte extends Model
 {
     use HasFactory;
+    public function abonne(){
+        return $this->belongsTo(Abonne::class);
+    }
 }

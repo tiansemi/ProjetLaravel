@@ -9,5 +9,9 @@ class Abonne extends Model
 {
     use HasFactory;
 
+    public function comptes(){
+        return $this->hasMany(Compte::class);
+    }
+    
     // Autres propriétés et méthodes...
 }
