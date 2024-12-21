@@ -12,6 +12,6 @@ class Abonne extends Model
     public function comptes(){
         return $this->hasMany(Compte::class);
     }
-    
+    protected $fillable = ['nom', 'prenom', 'email', 'contact', 'statut'];
     // Autres propriétés et méthodes...
 }

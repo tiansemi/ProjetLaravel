@@ -11,4 +11,6 @@ class Compte extends Model
     public function abonne(){
         return $this->belongsTo(Abonne::class);
     }
+    protected $fillable = ['abonne_id','libelle','description','banque','agence','numerocompte','clerib','montant','domiciliation','statut'];
+    // Autres propriétés et méthodes...
 }
