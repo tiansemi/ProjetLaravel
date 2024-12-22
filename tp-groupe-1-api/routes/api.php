@@ -9,6 +9,7 @@ Route::get('/user', function (Request $request) {
 
 use App\Http\Controllers\AbonneController;
 use App\Http\Controllers\CompteController;
+use App\Http\Controllers\PersonneController;
 
 Route::prefix('v1')->group(function () {
     // Routes pour les abonnés
@@ -22,4 +23,6 @@ Route::prefix('v1')->group(function () {
     Route::get('abonnes/{id}/comptes', [AbonneController::class, 'detailAbonneComptes']);
     Route::get('comptes/iban/{iban}', [CompteController::class, 'searchByIban']);
     Route::get('personnes/aleatoires', [PersonneController::class, 'aleatoire']);
+    Route::get('stats', [CompteController::class, 'stats']);
+
 });

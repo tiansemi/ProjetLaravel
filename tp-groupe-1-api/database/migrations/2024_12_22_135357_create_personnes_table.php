@@ -16,15 +16,15 @@ return new class extends Migration
             $table->string('nom');
             $table->string('prenom');
             $table->string('genre');
-            $table->string('ville');
-            $table->string('pays');
+            $table->string('ville')->nullable();
+            $table->string('pays')->nullable();
             $table->string('email')->unique();
             $table->date('dateNaissance')->nullable();
             $table->string('contact')->nullable();
-            $table->string('longitude')->nullable();
-            $table->string('latitude')->nullable();
-            $table->string('nationnalite');
-            $table->string('region')->nullable();
+            $table->decimal('longitude', 10, 7)->nullable();
+            $table->decimal('latitude', 10, 7)->nullable();
+            $table->string('nationnalite')->nullable();
+            $table->json('regions')->nullable(); // Colonne JSON pour les régions
             $table->timestamps();
         });
     }
