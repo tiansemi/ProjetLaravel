@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Compte;
+use App\Models\Abonne;
 
 class CompteController extends Controller
 {
@@ -113,4 +114,19 @@ class CompteController extends Controller
         }
         return response()->json($compte, 200);
     }
+
+    public function stats()
+    {
+        $stats = [
+            'nombre_comptes' => Compte::count(),
+            'nombre_abonnes' => Abonne::count(),
+            'somme_total_montant' => Compte::sum('montant'),
+            'montant_minimum' => Compte::min('montant'),
+            'montant_maximum' => Compte::max('montant'),
+            'montant_moyen' => Compte::avg('montant'),
+        ];
+
+        return response()->json($stats, 200);
+    }
+
 }

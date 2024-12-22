@@ -99,6 +99,9 @@ class AbonneController extends Controller
     public function abonnesComptes()
     {
         $abonnes = Abonne::with('comptes')->get();
+        if (!$abonnes) {
+            return response()->json(['error' => 'Les abonnés n\'ont pas de comptes'], 404);
+        }
         return response()->json($abonnes, 200);
     }
 
