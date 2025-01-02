@@ -3,9 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
+/*Route::get('/user', function (Request $request) {
     return $request->user();
-})->middleware('auth:sanctum');
+})->middleware('auth:sanctum');*/
 
 use App\Http\Controllers\AbonneController;
 use App\Http\Controllers\CompteController;
@@ -19,7 +19,8 @@ Route::prefix('v1')->group(function () {
     Route::apiResource('comptes', CompteController::class);
 
     // Routes spécifiques
-    Route::get('abonnes/comptes', [AbonneController::class, 'abonnesComptes']);
+    Route::post('abonnes/comptes', [AbonneController::class, 'abonnesComptes']);
+    // Route::get('abonnes/listecomptes', [AbonneController::class, 'abonnesComptes']);
     Route::get('abonnes/{id}/comptes', [AbonneController::class, 'detailAbonneComptes']);
     Route::get('comptes/iban/{iban}', [CompteController::class, 'searchByIban']);
     Route::get('personnes/aleatoires', [PersonneController::class, 'aleatoire']);
